@@ -13,6 +13,22 @@
 
   gtag('config', 'G-LVNJF5NENY');
 </script>
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Services informatiques professionnels pour PME et particuliers — Vaudreuil-Dorion & environs. Support à distance et sur place. Microsoft 365, Azure, Windows Server, Intune, Veeam, réseau, dépannage. 15+ ans d'expérience. | Professional IT support for businesses & individuals in Vaudreuil-Dorion area.">
+<meta name="keywords" content="support informatique Vaudreuil-Dorion, IT support Vaudreuil, dépannage ordinateur Vaudreuil, Microsoft 365 Vaudreuil, support informatique PME, Azure AD, Windows Server, Intune, Veeam backup, réseau informatique, computer repair Vaudreuil, IT consulting Quebec, technicien informatique Vaudreuil, support TI Vaudreuil-Dorion">
+<meta name="author" content="Global Innovations">
+<meta name="robots" content="index, follow">
+<meta name="geo.region" content="CA-QC">
+<meta name="geo.placename" content="Vaudreuil-Dorion, Quebec">
+<meta property="og:title" content="Global Innovations | Support IT Professionnel — Vaudreuil-Dorion">
+<meta property="og:description" content="Services informatiques professionnels pour PME. Microsoft 365, Azure, Windows Server, support à distance et sur place. 15+ ans d'expérience. Vaudreuil-Dorion & environs.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.globalinnovations.ca">
+<meta property="og:locale" content="fr_CA">
+<meta property="og:locale:alternate" content="en_CA">
+<link rel="canonical" href="https://www.globalinnovations.ca">
+
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -480,8 +496,8 @@
 
 <!-- FLOATING LANG SWITCHER -->
 <div class="lang-float">
-  <button class="lang-btn active" onclick="setLang('fr')">FR</button>
-  <button class="lang-btn" onclick="setLang('en')">EN</button>
+  <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
+  <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
 </div>
 
 <!-- NAV -->
@@ -494,8 +510,8 @@
       <a href="#pourquoi" data-fr="Pourquoi nous" data-en="Why us">Pourquoi nous</a>
       <a href="#contact" class="cta-nav" data-fr="Nous Contacter" data-en="Contact Us">Nous Contacter</a>
       <div class="nav-lang">
-        <button class="lang-btn active" onclick="setLang('fr')">FR</button>
-        <button class="lang-btn" onclick="setLang('en')">EN</button>
+        <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
       </div>
     </div>
   </div>
@@ -706,18 +722,17 @@
 
 <script>
   // ── LANGUAGE SYSTEM ──
-  const translations = { fr: {}, en: {} };
-
   function setLang(lang) {
     document.documentElement.lang = lang;
     localStorage.setItem('gi-lang', lang);
 
-    // Update all elements with data-fr / data-en
+    // Update all elements with data-fr / data-en — skip lang buttons
     document.querySelectorAll('[data-fr]').forEach(el => {
+      if (el.classList.contains('lang-btn')) return;
       const val = el.getAttribute('data-' + lang);
       if (!val) return;
       if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') return;
-      if (el.innerHTML !== undefined) el.innerHTML = val;
+      el.innerHTML = val;
     });
 
     // Placeholders
@@ -731,9 +746,9 @@
       if (val) opt.textContent = val;
     });
 
-    // Update lang buttons
+    // Update lang buttons using data-lang attribute
     document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang);
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
     });
   }
 
