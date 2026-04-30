@@ -492,6 +492,40 @@
     .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
     .stat-item:last-child { border-bottom: none; }
   }
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.nav-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+@media (max-width: 768px) {
+  .nav-toggle { display: flex; }
+  .links {
+    display: none;
+    position: fixed;
+    top: 66px; left: 0; right: 0;
+    background: rgba(20,28,46,0.97);
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 0;
+    gap: 24px;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(18px);
+  }
+  .links.nav-active { display: flex; }
+}
+
 </style>
 </head>
 <body>
@@ -506,6 +540,10 @@
 <nav>
   <div class="inner">
     <a href="#" class="logo">Global<span>Innovations</span></a>
+<button class="nav-toggle" onclick="toggleMenu()" aria-label="Menu">
+  <span></span><span></span><span></span>
+</button>
+
     <div class="links">
       <a href="#services" data-fr="Services" data-en="Services">Services</a>
       <a href="#intervention" data-fr="Intervention" data-en="On-site / Remote">Intervention</a>
@@ -806,6 +844,17 @@
   }
 
   document.getElementById('contact-form').addEventListener('submit', handleSubmit);
+
+function toggleMenu() {
+  document.querySelector('.links').classList.toggle('nav-active');
+}
+// Ferme le menu quand on clique un lien
+document.querySelectorAll('.links a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelector('.links').classList.remove('nav-active');
+  });
+});
+
 </script>
 
 </body>
